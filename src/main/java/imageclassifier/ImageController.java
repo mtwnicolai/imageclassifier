@@ -11,18 +11,19 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class ImageController {
 
+    private final PredictionService predictionService;
+
+    public ImageController(PredictionService predictionService){
+        this.predictionService = predictionService;
+    }
+
     @GetMapping("/test")
     public String test(){
         return "Image Classifier funcionando!";
     }
 
-    @GetMapping("/predict")
-    public Prediction predict() {
-        return PredictionService.predict();
-    }
-
     @PostMapping("/predict")
     public Prediction predictImage(@RequestParam("image") MultipartFile image){
-        return PredictionService.predict(image);
+        return predictionService.predict(image);
     }
 }
